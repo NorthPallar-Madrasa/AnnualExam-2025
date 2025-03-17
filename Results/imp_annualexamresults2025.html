@@ -59,6 +59,8 @@
         <div id="loading" class="loading">Loading...</div>
         <div id="result" class="result"></div>
     </div>
+    <button onclick="generatePDF()" class="no-print">Download Result</button>
+    <button onclick="window.print()" class="no-print">Print Result</button>
     <footer style="text-align: center; padding: 10px; background-color: #f8f9fa; font-size: 14px;">
         <p>© <script>document.write(new Date().getFullYear());</script> All Rights Reserved | Powered by  
             <a href="https://www.example.com" target="_blank" style="text-decoration: none; font-weight: bold; color: #007bff;">IMP Pallar</a>
@@ -67,6 +69,28 @@
     
 
     <script src="script.js"></script>
+    <script>
+
+function generatePDF() {
+            const noPrintElements = document.querySelectorAll('.no-print');
+            noPrintElements.forEach(el => el.style.display = 'none');
+            const element = document.body;
+            html2canvas(element, {
+              scale: 2,
+              useCORS: true
+            }).then(canvas => {
+            const imgData = canvas.toDataURL("image/png");
+            const link = document.createElement("a");
+           link.href = imgData;
+           link.download = "Result.png";
+           document.body.appendChild(link);
+           link.click();
+           document.body.removeChild(link);
+            noPrintElements.forEach(el => el.style.display = '');
+           });
+         }
+      
+    </script>
 </body>
 
 </html>
